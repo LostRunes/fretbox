@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import '../screens/vacation/vacation.dart';
+import '../screens/dayout/dayout.dart';
+import '../screens/emergency/emergency.dart';
+import './notification/notification.dart';
+
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -35,7 +39,7 @@ class DashboardPage extends StatelessWidget {
 ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: _bottomNav(),
+      bottomNavigationBar: _bottomNav(context),
     );
   }
 
@@ -294,7 +298,18 @@ class DashboardPage extends StatelessWidget {
   },
 ),
 
-          _ActionIcon(icon: Icons.wb_sunny, label: 'Dayout'),
+          _ActionIcon(
+  icon: Icons.sunny,
+  label: 'Dayout',
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const DayOutPage(),
+      ),
+    );
+  },
+),
           _ActionIcon(icon: Icons.report_problem, label: 'Grievance'),
           _ActionIcon(icon: Icons.grid_view, label: 'See more'),
         ],
@@ -311,6 +326,7 @@ class DashboardPage extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
+        
         onTap: () {
           // 👉 button action here
           debugPrint('Entry/Exit card tapped');
@@ -321,9 +337,14 @@ class DashboardPage extends StatelessWidget {
             width: MediaQuery.of(context).size.width - 24,
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
+  color: Colors.white,
+  borderRadius: BorderRadius.circular(16),
+  border: Border.all(
+    color: const Color.fromARGB(255, 0, 0, 0), // subtle border
+    width: 0.5,
+  ),
+),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -375,7 +396,7 @@ class DashboardPage extends StatelessWidget {
         const SizedBox(height: 10),
         const Text(
           "You've no activities yet",
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18),
         ),
       ],
     );
@@ -387,6 +408,11 @@ class DashboardPage extends StatelessWidget {
     return Column(
       children: [
         Image.asset('assets/fretboxlogo.png', height: 24),
+          const SizedBox(height: 4),
+        const Text(
+          'Powered by: FretBox',
+          style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 0, 0, 0), fontStyle: FontStyle.italic),
+        ),
         const SizedBox(height: 4),
         const Text(
           'v3.10.4+204',
@@ -398,7 +424,7 @@ class DashboardPage extends StatelessWidget {
 
   /* ---------------- BOTTOM NAV ---------------- */
 
-  Widget _bottomNav() {
+  Widget _bottomNav(BuildContext context) {
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
       notchMargin: 8,
@@ -408,9 +434,34 @@ class DashboardPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _NavItem(icon: Icons.home, label: 'Home', active: true),
-            _NavItem(icon: Icons.warning, label: 'Emergency',color: Colors.red,),
+            _NavItem(
+  icon: Icons.warning,
+  label: 'Emergency',
+  color: Colors.red,
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const EmergencyPage(),
+      ),
+    );
+  },
+),
+
             const SizedBox(width: 40),
-            _NavItem(icon: Icons.notifications, label: 'Notification'),
+            _NavItem(
+  icon: Icons.notifications,
+  label: 'Notification',
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const NotificationPage(),
+      ),
+    );
+  },
+),
+
             _NavItem(icon: Icons.person, label: 'Profile'),
           ],
         ),
@@ -531,21 +582,34 @@ class _NavItem extends StatelessWidget {
   final String label;
   final bool active;
  final Color? color;
+ final VoidCallback? onTap;
+
+
+
+ 
   const _NavItem({
     required this.icon,
     required this.label,
     this.active = false,
     this.color,
+    this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, color: active ? const Color(0xFF4C8BF5) : Colors.grey),
+          // Icon(icon, color: active ? const Color(0xFF4C8BF5) : Colors.grey),
+          Icon(
+  icon,
+  color: active
+      ? const Color(0xFF4C8BF5)
+      : (color ?? Colors.grey),
+),
+
           Text(
             label,
             style: TextStyle(
