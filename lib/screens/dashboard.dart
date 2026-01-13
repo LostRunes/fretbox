@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../screens/vacation/vacation.dart';
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -14,7 +14,8 @@ class DashboardPage extends StatelessWidget {
             children: [
               _topHeader(),
               _searchBar(),
-              _quickActions(),
+              _quickActions(context),
+
               _entryExitCard(context),
               const SizedBox(height: 20),
               _emptyState(),
@@ -273,13 +274,26 @@ class DashboardPage extends StatelessWidget {
 
   /* ---------------- QUICK ACTIONS ---------------- */
 
-  Widget _quickActions() {
+  Widget _quickActions(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _ActionIcon(icon: Icons.logout, label: 'Vacation'),
+          _ActionIcon(
+  icon: Icons.logout,
+  label: 'Vacation',
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const MyVacationsPage(),
+      ),
+    );
+  },
+),
+
           _ActionIcon(icon: Icons.wb_sunny, label: 'Dayout'),
           _ActionIcon(icon: Icons.report_problem, label: 'Grievance'),
           _ActionIcon(icon: Icons.grid_view, label: 'See more'),
@@ -469,12 +483,18 @@ class _QuickActionItem extends StatelessWidget {
 class _ActionIcon extends StatelessWidget {
   final IconData icon;
   final String label;
-  const _ActionIcon({required this.icon, required this.label});
+  final VoidCallback? onTap;
+
+  const _ActionIcon({
+    required this.icon,
+    required this.label,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Column(
         children: [
           Icon(icon, color: const Color(0xFF4C8BF5)),
@@ -485,6 +505,7 @@ class _ActionIcon extends StatelessWidget {
     );
   }
 }
+
 
 class _LiveBadge extends StatelessWidget {
   const _LiveBadge();
