@@ -6,6 +6,7 @@ import '../screens/dayout/dayout.dart';
 import '../screens/emergency/emergency.dart';
 import './notification/notification.dart';
 import '../screens/profile.dart';
+import './profile/student_id_card.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -154,7 +155,16 @@ class _DashboardPageState extends State<DashboardPage> {
                 const SizedBox(width: 6),
                 Image.asset('assets/fretboxlogo.png', height: 59),
                 const Spacer(),
-                _headerIcon(Icons.badge),
+               _headerIcon(
+  Icons.badge,
+  onTap: () {
+    showDialog(
+      context: context,
+      builder: (_) => const StudentIdCard(),
+    );
+  },
+),
+
                 const SizedBox(width: 14),
                 _headerIcon(Icons.refresh),
                 const SizedBox(width: 14),
@@ -228,12 +238,17 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 
-  Widget _headerIcon(IconData icon) {
-    return InkWell(
-      onTap: () {},
-      child: Icon(icon, color: Colors.white, size: 28),
-    );
-  }
+Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Icon(
+      icon,
+      color: Colors.white,
+      size: 28,
+    ),
+  );
+}
+
 
   /* ---------------- SEARCH ---------------- */
 
