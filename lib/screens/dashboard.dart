@@ -1,13 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import '../screens/vacation/vacation.dart';
 import '../screens/dayout/dayout.dart';
 import '../screens/emergency/emergency.dart';
 import './notification/notification.dart';
 import '../screens/profile.dart';
 import './profile/student_id_card.dart';
-
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -58,11 +60,15 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: const Color(0xFF4C8BF5),
-        onPressed: () => _showQuickActions(context),
-        child: const Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        height: 70,
+        width: 70,
+        child: FloatingActionButton(
+          shape: const CircleBorder(),
+          backgroundColor: const Color(0xFF4C8BF5),
+          onPressed: () => _showQuickActions(context),
+          child: const Icon(Icons.add,size: 32,color: Colors.white,),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: _bottomNav(context),
@@ -141,7 +147,7 @@ class _DashboardPageState extends State<DashboardPage> {
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.2),
+
           borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(24),
             bottomRight: Radius.circular(24),
@@ -254,11 +260,11 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
 
   Widget _searchBar() {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(20),
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Search for Leave, Complaints, etc...',
-          prefixIcon: const Icon(Icons.search),
+          suffixIcon: const Icon(Icons.search),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(
@@ -279,7 +285,7 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _ActionIcon(
-            icon: Icons.logout,
+            image: Image.asset('assets/Group 1.png',height: 36,),
             label: 'Vacation',
             onTap: () {
               Navigator.push(
@@ -289,7 +295,7 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
             },
           ),
           _ActionIcon(
-            icon: Icons.sunny,
+            image: Image.asset('assets/Group 2.png',height: 36,),
             label: 'Dayout',
             onTap: () {
               Navigator.push(
@@ -298,8 +304,12 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
               );
             },
           ),
-          const _ActionIcon(icon: Icons.report_problem, label: 'Grievance'),
-          const _ActionIcon(icon: Icons.grid_view, label: 'See more'),
+           _ActionIcon(
+              image: Image.asset('assets/Group 3.png',height :36),
+              label: 'Grievance'),
+          _ActionIcon(
+              image: Image.asset('assets/Group 4.png',height: 36),
+              label: 'See more'),
         ],
       ),
     );
@@ -315,34 +325,94 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.black, width: 0.5),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Colors.grey.shade400, width: 1),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+
+            // HEADER
+            Row(
               children: [
-                _LiveBadge(),
-                SizedBox(width: 8),
-                Text('Entry/Exit Log', style: TextStyle(fontWeight: FontWeight.w600)),
-                Spacer(),
-                Text('Your Status', style: TextStyle(color: Colors.grey)),
+                Container(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Text(
+                    'Live',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'Entry/Exit Log',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 14),
+                ),
+                const Spacer(),
+                const Text(
+                  'Your Status',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500),
+                ),
               ],
             ),
-            const SizedBox(height: 8),
+
+            const SizedBox(height: 6),
+
+            // DATE
             const Text(
-              'Wed, 14 Jan 2026 | 2:29 AM',
-              style: TextStyle(color: Colors.grey, fontSize: 12),
+              'Wed, 14 Jan 2026 | 1:30 AM',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+              ),
             ),
-            const SizedBox(height: 12),
+
+            const SizedBox(height: 14),
+
+            // BUTTON ROW
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _pillButton('Exit'),
-                const Text('--'),
-                _pillButton('Entry'),
-                const Text('--'),
+                Container(
+                  child :Row(
+                    children:
+                    [_pillButton('Exit'),
+                    SizedBox(width: 20,),
+                    Text("--")],
+
+                    ),
+                  width: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(18)
+                  ),
+                ),
+                Container(
+                  child :Row(
+                    children:
+                    [_pillButton('Exit'),
+                      SizedBox(width: 20,),
+                      Text("--")],
+
+                  ),
+                  width: 120,
+                  decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(18)
+                  ),
+                ),
+
               ],
             ),
           ],
@@ -350,6 +420,7 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
       ),
     );
   }
+
 
   /* ---------------- EMPTY ---------------- */
 
@@ -390,48 +461,57 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
 
   Widget _bottomNav(BuildContext context) {
     return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 8,
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            const _NavItem(icon: Icons.home, label: 'Home', active: true),
-            _NavItem(
-              icon: Icons.warning,
-              label: 'Emergency',
-              color: Colors.red,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const EmergencyPage()),
-                );
-              },
-            ),
-            const SizedBox(width: 40),
-            _NavItem(
-              icon: Icons.notifications,
-              label: 'Notification',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const NotificationPage()),
-                );
-              },
-            ),
-            _NavItem(
-              icon: Icons.person,
-              label: 'Profile',
-              onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ProfilePage()),
-                );
-                _loadUser(); // 🔁 refresh after profile edit
-              },
-            ),
-          ],
+      notchMargin: 0,
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: SizedBox(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const
+              _NavItem(
+                  icon: FluentIcons.home_48_regular,
+                  label: 'Home',
+                  active: true),
+              _NavItem(
+                icon: Icons.warning,
+                label: 'Emergency',
+                color: Colors.red,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const EmergencyPage()),
+                  );
+                },
+              ),
+              const SizedBox(width: 40),
+              _NavItem(
+                icon: FontAwesomeIcons.bell,
+                label: 'Notification',
+
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const NotificationPage()),
+                  );
+                },
+              ),
+              _NavItem(
+                icon: MdiIcons.accountOutline,
+                size: 32,
+                label: 'Profile',
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ProfilePage()),
+                  );
+                  _loadUser(); // 🔁 refresh after profile edit
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -439,14 +519,25 @@ Widget _headerIcon(IconData icon, {VoidCallback? onTap}) {
 
   static Widget _pillButton(String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      height: 28,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(18),
       ),
-      child: Text(text, style: const TextStyle(color: Colors.white)),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
   }
+
+
 }
 
 /* ---------------- SMALL WIDGETS ---------------- */
@@ -477,11 +568,17 @@ class _QuickActionItem extends StatelessWidget {
 }
 
 class _ActionIcon extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final Image? image;
   final String label;
   final VoidCallback? onTap;
 
-  const _ActionIcon({required this.icon, required this.label, this.onTap});
+  const _ActionIcon({
+    this.icon,
+    this.image,
+    required this.label,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -489,13 +586,26 @@ class _ActionIcon extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          Icon(icon, color: const Color(0xFF4C8BF5)),
+          _buildIcon(),
           const SizedBox(height: 4),
           Text(label, style: const TextStyle(fontSize: 12)),
         ],
       ),
     );
   }
+
+  Widget _buildIcon() {
+    if (image != null) {
+      return image!;
+    }
+
+    return Icon(
+      icon,
+      size: 26,
+      color: const Color(0xFF4C8BF5),
+    );
+  }
+
 }
 
 class _LiveBadge extends StatelessWidget {
@@ -516,6 +626,7 @@ class _NavItem extends StatelessWidget {
   final String label;
   final bool active;
   final Color? color;
+  final double size;
   final VoidCallback? onTap;
 
   const _NavItem({
@@ -524,6 +635,7 @@ class _NavItem extends StatelessWidget {
     this.active = false,
     this.color,
     this.onTap,
+    this.size = 24,
   });
 
   @override
@@ -531,17 +643,26 @@ class _NavItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Icon(
-            icon,
-            color: active ? const Color(0xFF4C8BF5) : (color ?? Colors.grey),
+          SizedBox(
+            height: 28,
+            child: Icon(
+              icon,
+              size: size,
+              color: active
+                  ? const Color(0xFF4C8BF5)
+                  : (color ?? Colors.grey),
+            ),
           ),
+          const SizedBox(height: 2),
           Text(
             label,
             style: TextStyle(
               fontSize: 11,
-              color: active ? const Color(0xFF4C8BF5) : Colors.grey,
+              color: active
+                  ? const Color(0xFF4C8BF5)
+                  : Colors.grey,
             ),
           ),
         ],

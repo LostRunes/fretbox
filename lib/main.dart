@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fretbox/screens/dashboard.dart';
+import 'package:fretbox/screens/grievance/griveance_main.dart';
+import 'package:fretbox/screens/profile.dart';
 import './screens/onboarding_1.dart';
 
 void main() {
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home:  SaveTimePage(),
+       home:  GriveanceMain()
       );
   }
 }
